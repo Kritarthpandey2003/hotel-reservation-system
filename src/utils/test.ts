@@ -1,5 +1,5 @@
 import { generateInitialRooms, findOptimalRooms, calculateTravelTime } from './bookingLogic';
-import { Room } from '../types';
+
 
 console.log("Starting Verification...");
 

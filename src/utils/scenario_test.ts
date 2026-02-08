@@ -1,5 +1,4 @@
 
-import { Room } from './types';
 import { findOptimalRooms, calculateTravelTime, generateInitialRooms } from './bookingLogic';
 
 const runScenario = () => {

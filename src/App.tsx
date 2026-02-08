@@ -36,7 +36,7 @@ function App() {
   };
 
   const handleRandom = () => {
-    setRooms(prev => generateRandomOccupancy(generateInitialRooms())); // Reset and randomize
+    setRooms(generateRandomOccupancy(generateInitialRooms())); // Reset and randomize
     setLastBookedRooms([]);
     setError(null);
   };
