@@ -1,4 +1,4 @@
-import { generateInitialRooms, findOptimalRooms, calculateTravelTime } from './bookingLogic';
+import { generateInitialRooms, findOptimalRooms } from './bookingLogic';
 
 
 console.log("Starting Verification...");
