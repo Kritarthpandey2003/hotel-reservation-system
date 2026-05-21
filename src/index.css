@@ -1,36 +1,54 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  --color-background: #f4f7fb;
+  --color-surface: #ffffff;
+  --color-primary: #38b2ac;
+  --color-text-main: #2d3748;
+  --color-text-muted: #718096;
+  
+  --color-status-available: #9ae6b4;
+  --color-status-occupied: #feb2b2;
+  --color-status-cleaning: #faf089;
+  --color-status-maintenance: #90cdf4;
+  --color-status-checkout: #d6bcfa;
+  
+  --color-sidebar: #ffffff;
+  --color-border: #e2e8f0;
+  
+  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-popover: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
 
 :root {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
 }
 
 body {
   margin: 0;
   padding: 0;
-  background-color: #eef2f6; /* Dashboard background */
-  color: #334155;
+  background-color: var(--color-background);
+  color: var(--color-text-main);
   overflow-x: hidden;
 }
 
 @layer components {
   .dashboard-card {
-    @apply bg-surface rounded-xl border border-border shadow-card overflow-hidden;
+    @apply bg-surface rounded-md border border-border shadow-sm overflow-hidden;
   }
   
   .dashboard-input {
-    @apply w-full bg-white border border-border text-text-main placeholder-text-muted focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-md px-3 py-2 text-sm transition-colors;
+    @apply w-full bg-white border border-border text-text-main placeholder-text-muted focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded px-3 py-1.5 text-sm transition-colors;
   }
 
   .btn-dashboard {
-    @apply bg-primary hover:bg-[#346b8a] text-white font-medium py-2 px-4 rounded-md transition-colors text-sm;
+    @apply bg-primary hover:bg-[#319795] text-white font-medium py-1.5 px-3 rounded transition-colors text-sm;
   }
   
   .btn-outline {
-    @apply bg-white border border-border hover:bg-gray-50 text-text-main font-medium py-2 px-4 rounded-md transition-colors text-sm;
+    @apply bg-white border border-border hover:bg-gray-50 text-text-main font-medium py-1.5 px-3 rounded transition-colors text-sm;
   }
 }
 
