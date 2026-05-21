@@ -29,7 +29,7 @@ const Controls: React.FC<ControlsProps> = ({ rooms, lastBookedRooms, onBook, onR
     const occupancyPct = totalRooms === 0 ? 0 : Math.round((occupiedRooms / totalRooms) * 100);
 
     return (
-        <div className="flex flex-col gap-4 h-full">
+        <div className="flex flex-col gap-4">
             {/* Quick Allocation Form */}
             <div className="dashboard-card p-4 flex flex-col">
                 <h3 className="text-sm font-bold text-text-main mb-4 flex-shrink-0">Quick Allocation Form</h3>
@@ -146,7 +146,7 @@ const Controls: React.FC<ControlsProps> = ({ rooms, lastBookedRooms, onBook, onR
             </div>
 
             {/* Recent Activity Feed */}
-            <div className="dashboard-card p-4 flex-1 flex flex-col">
+            <div className="dashboard-card p-4 flex flex-col min-h-[200px]">
                 <h3 className="text-sm font-bold text-text-main mb-3">Recent Activity Feed</h3>
                 <div className="flex flex-col gap-3 overflow-y-auto custom-scrollbar flex-1 pr-1">
                     <div className="text-[10px] text-text-main"><span className="font-bold text-text-muted w-10 inline-block">15:32</span> - Guest checked in to Room 205 (Ava M.)</div>
