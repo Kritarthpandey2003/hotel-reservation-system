@@ -4,7 +4,7 @@ import type { Room } from '../types';
 interface ControlsProps {
     rooms: Room[];
     lastBookedRooms: number[];
-    onBook: (count: number) => void;
+    onBook: (count: number, name: string, email: string) => void;
     onRandom: () => void;
     onReset: () => void;
     error: string | null;
@@ -12,10 +12,15 @@ interface ControlsProps {
 
 const Controls: React.FC<ControlsProps> = ({ rooms, lastBookedRooms, onBook, onRandom, onReset, error }) => {
     const [count, setCount] = useState<number | string>('');
+    const [guestName, setGuestName] = useState('');
+    const [guestEmail, setGuestEmail] = useState('');
 
     const handleBookClick = () => {
         const num = typeof count === 'string' ? parseInt(count) || 1 : count;
-        onBook(Math.max(1, Math.min(5, num)));
+        onBook(Math.max(1, Math.min(5, num)), guestName, guestEmail);
+        setGuestName('');
+        setGuestEmail('');
+        setCount('');
     };
 
     // Calculate dynamic stats
@@ -31,6 +36,26 @@ const Controls: React.FC<ControlsProps> = ({ rooms, lastBookedRooms, onBook, onR
                 
                 <div className="space-y-3">
                     <div>
+                        <label className="block text-[10px] font-bold text-text-muted mb-1 uppercase tracking-wider">
+                            Guest Name
+                        </label>
+                        <input 
+                            type="text" 
+                            value={guestName}
+                            onChange={(e) => setGuestName(e.target.value)}
+                            className="w-full border border-border rounded px-3 py-1.5 text-xs text-text-main focus:outline-none focus:border-primary mb-2"
+                            placeholder="e.g. John Doe"
+                        />
+                        <label className="block text-[10px] font-bold text-text-muted mb-1 uppercase tracking-wider">
+                            Guest Email
+                        </label>
+                        <input 
+                            type="email" 
+                            value={guestEmail}
+                            onChange={(e) => setGuestEmail(e.target.value)}
+                            className="w-full border border-border rounded px-3 py-1.5 text-xs text-text-main focus:outline-none focus:border-primary mb-2"
+                            placeholder="john@example.com"
+                        />
                         <label className="block text-[10px] font-bold text-text-muted mb-1 uppercase tracking-wider">
                             Rooms Required (Max 5)
                         </label>

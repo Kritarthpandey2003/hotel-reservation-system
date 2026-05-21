@@ -1,14 +1,38 @@
 export interface Room {
     floor: number;
     number: number;
-    // Visual index for calculations. 
-    // Floor 1-9: 0-9
-    // Floor 10: 0-6
     index: number;
     isBooked: boolean;
 }
 
-export interface Booking {
+export interface GuestProfile {
     id: string;
-    roomNumbers: number[];
+    name: string;
+    email: string;
+    phone: string;
+    tier: string;
+    stays: number;
+    points: string;
+    lastVisit: string;
+}
+
+export interface Reservation {
+    id: string;
+    guestId: string;
+    guestName: string;
+    rooms: number[];
+    checkIn: string;
+    checkOut: string;
+    status: string;
+    tier: string;
+}
+
+export interface MaintenanceTask {
+    id: string;
+    room: string;
+    issue: string;
+    priority: string;
+    status: string;
+    reported: string;
+    assignedTo: string;
 }

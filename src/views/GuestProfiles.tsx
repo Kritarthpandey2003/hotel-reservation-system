@@ -1,14 +1,11 @@
 import React from 'react';
+import type { GuestProfile } from '../types';
 
-const GuestProfiles = () => {
-  const guests = [
-    { id: 'GST-882', name: 'Alice Johnson', email: 'alice.j@example.com', phone: '+1 (555) 019-2831', tier: 'Platinum', stays: 42, points: '124,500', lastVisit: 'Oct 12, 2026' },
-    { id: 'GST-105', name: 'Michael Chen', email: 'm.chen@corporate.com', phone: '+1 (555) 992-1022', tier: 'Gold', stays: 18, points: '45,200', lastVisit: 'Sep 28, 2026' },
-    { id: 'GST-934', name: 'Sarah Jenkins', email: 'sarah.j@email.com', phone: '+44 20 7123 4567', tier: 'Silver', stays: 5, points: '12,000', lastVisit: 'Jul 14, 2026' },
-    { id: 'GST-221', name: 'David Rodriguez', email: 'drodriguez@mail.net', phone: '+1 (555) 334-9081', tier: 'Platinum', stays: 31, points: '89,400', lastVisit: 'Oct 01, 2026' },
-    { id: 'GST-675', name: 'Emma Thompson', email: 'emma.t@example.co.uk', phone: '+44 7700 900077', tier: 'Standard', stays: 2, points: '2,500', lastVisit: 'Mar 10, 2026' },
-    { id: 'GST-443', name: 'James Wilson', email: 'j.wilson@business.com', phone: '+1 (555) 887-5542', tier: 'Gold', stays: 14, points: '38,900', lastVisit: 'Aug 22, 2026' },
-  ];
+interface GuestProfilesProps {
+  guests: GuestProfile[];
+}
+
+const GuestProfiles: React.FC<GuestProfilesProps> = ({ guests }) => {
 
   const getTierColor = (tier: string) => {
     switch(tier) {
@@ -38,51 +35,59 @@ const GuestProfiles = () => {
       </div>
 
       <div className="flex-1 overflow-auto custom-scrollbar">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {guests.map((guest) => (
-            <div key={guest.id} className="border border-border rounded-md p-4 hover:shadow-md transition-shadow bg-white flex flex-col relative">
-              
-              <div className="flex justify-between items-start mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
-                    {guest.name.split(' ').map(n => n[0]).join('')}
+        {guests.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-48 text-text-muted">
+            <svg className="w-12 h-12 mb-3 text-border" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            <p>No guest profiles found.</p>
+            <p className="text-xs">Profiles are automatically generated when bookings are made.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {guests.map((guest) => (
+              <div key={guest.id} className="border border-border rounded-md p-4 hover:shadow-md transition-shadow bg-white flex flex-col relative">
+                
+                <div className="flex justify-between items-start mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
+                      {guest.name.split(' ').map(n => n[0]).join('')}
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-text-main">{guest.name}</h3>
+                      <div className="text-[10px] text-text-muted">{guest.id}</div>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-sm font-bold text-text-main">{guest.name}</h3>
-                    <div className="text-[10px] text-text-muted">{guest.id}</div>
+                  <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${getTierColor(guest.tier)}`}>
+                    {guest.tier}
+                  </span>
+                </div>
+
+                <div className="space-y-2 mt-2 border-t border-border pt-3">
+                  <div className="flex items-center gap-2 text-xs text-text-muted">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    {guest.email}
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-text-muted">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                    {guest.phone}
                   </div>
                 </div>
-                <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${getTierColor(guest.tier)}`}>
-                  {guest.tier}
-                </span>
-              </div>
 
-              <div className="space-y-2 mt-2 border-t border-border pt-3">
-                <div className="flex items-center gap-2 text-xs text-text-muted">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                  {guest.email}
+                <div className="mt-4 bg-gray-50 rounded p-2 flex justify-between items-center border border-border/50">
+                  <div className="text-center flex-1">
+                    <div className="text-[9px] font-bold text-text-muted uppercase tracking-wider mb-0.5">Total Stays</div>
+                    <div className="text-sm font-black text-text-main">{guest.stays}</div>
+                  </div>
+                  <div className="w-px h-6 bg-border"></div>
+                  <div className="text-center flex-1">
+                    <div className="text-[9px] font-bold text-text-muted uppercase tracking-wider mb-0.5">Reward Pts</div>
+                    <div className="text-sm font-black text-primary">{guest.points}</div>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-text-muted">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                  {guest.phone}
-                </div>
-              </div>
 
-              <div className="mt-4 bg-gray-50 rounded p-2 flex justify-between items-center border border-border/50">
-                <div className="text-center flex-1">
-                  <div className="text-[9px] font-bold text-text-muted uppercase tracking-wider mb-0.5">Total Stays</div>
-                  <div className="text-sm font-black text-text-main">{guest.stays}</div>
-                </div>
-                <div className="w-px h-6 bg-border"></div>
-                <div className="text-center flex-1">
-                  <div className="text-[9px] font-bold text-text-muted uppercase tracking-wider mb-0.5">Reward Pts</div>
-                  <div className="text-sm font-black text-primary">{guest.points}</div>
-                </div>
               </div>
-
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

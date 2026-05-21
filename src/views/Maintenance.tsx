@@ -1,13 +1,11 @@
 import React from 'react';
+import type { MaintenanceTask } from '../types';
 
-const Maintenance = () => {
-  const tasks = [
-    { id: 'MT-492', room: '310', issue: 'Air Conditioning leak', priority: 'High', status: 'In Progress', reported: 'Oct 24, 09:30 AM', assignedTo: 'Tech Team A' },
-    { id: 'MT-493', room: '705', issue: 'Broken shower head', priority: 'Medium', status: 'Open', reported: 'Oct 24, 11:15 AM', assignedTo: 'Plumbing' },
-    { id: 'MT-494', room: '202', issue: 'TV remote not working', priority: 'Low', status: 'Open', reported: 'Oct 24, 01:45 PM', assignedTo: 'General' },
-    { id: 'MT-495', room: '812', issue: 'Carpet deep clean required', priority: 'Medium', status: 'Resolved', reported: 'Oct 23, 04:00 PM', assignedTo: 'Housekeeping' },
-    { id: 'MT-496', room: '1004', issue: 'Window seal broken', priority: 'High', status: 'In Progress', reported: 'Oct 24, 10:00 AM', assignedTo: 'External Contractor' },
-  ];
+interface MaintenanceProps {
+  tasks: MaintenanceTask[];
+}
+
+const Maintenance: React.FC<MaintenanceProps> = ({ tasks }) => {
 
   const getPriorityColor = (priority: string) => {
     switch(priority) {
@@ -50,44 +48,51 @@ const Maintenance = () => {
       </div>
 
       <div className="flex-1 overflow-auto custom-scrollbar">
-        <div className="grid grid-cols-1 gap-3">
-          {tasks.map((task) => (
-            <div key={task.id} className={`bg-white border-l-4 ${getStatusColor(task.status)} border-y border-r border-y-border border-r-border rounded shadow-sm p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:bg-gray-50 transition-colors`}>
-              
-              <div className="flex items-start gap-4 flex-1">
-                <div className="flex flex-col items-center justify-center w-12 h-12 bg-gray-100 rounded flex-shrink-0">
-                  <span className="text-[9px] font-bold text-text-muted uppercase tracking-wider mb-0.5">Room</span>
-                  <span className="text-sm font-black text-text-main leading-none">{task.room}</span>
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-text-main">{task.issue}</h3>
-                  <div className="flex items-center gap-3 mt-1.5">
-                    <span className="text-[10px] text-text-muted font-medium">{task.id}</span>
-                    <span className="w-1 h-1 rounded-full bg-border"></span>
-                    <span className="text-[10px] text-text-muted font-medium">Reported: {task.reported}</span>
+        {tasks.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-48 text-text-muted">
+            <svg className="w-12 h-12 mb-3 text-border" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <p>No maintenance tasks currently open.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-3">
+            {tasks.map((task) => (
+              <div key={task.id} className={`bg-white border-l-4 ${getStatusColor(task.status)} border-y border-r border-y-border border-r-border rounded shadow-sm p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:bg-gray-50 transition-colors`}>
+                
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="flex flex-col items-center justify-center w-12 h-12 bg-gray-100 rounded flex-shrink-0">
+                    <span className="text-[9px] font-bold text-text-muted uppercase tracking-wider mb-0.5">Room</span>
+                    <span className="text-sm font-black text-text-main leading-none">{task.room}</span>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-text-main">{task.issue}</h3>
+                    <div className="flex items-center gap-3 mt-1.5">
+                      <span className="text-[10px] text-text-muted font-medium">{task.id}</span>
+                      <span className="w-1 h-1 rounded-full bg-border"></span>
+                      <span className="text-[10px] text-text-muted font-medium">Reported: {task.reported}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="flex items-center gap-4 sm:w-[300px] justify-between">
-                <div className="flex flex-col gap-1">
-                  <span className="text-[9px] font-bold text-text-muted uppercase tracking-wider">Assigned To</span>
-                  <span className="text-xs font-medium text-text-main">{task.assignedTo}</span>
+                <div className="flex items-center gap-4 sm:w-[300px] justify-between">
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[9px] font-bold text-text-muted uppercase tracking-wider">Assigned To</span>
+                    <span className="text-xs font-medium text-text-main">{task.assignedTo}</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider ${getPriorityColor(task.priority)}`}>
+                      {task.priority}
+                    </span>
+                    <span className="px-2 py-1 border border-border bg-white rounded text-[10px] font-bold uppercase tracking-wider text-text-main">
+                      {task.status}
+                    </span>
+                  </div>
                 </div>
-                
-                <div className="flex items-center gap-2">
-                  <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider ${getPriorityColor(task.priority)}`}>
-                    {task.priority}
-                  </span>
-                  <span className="px-2 py-1 border border-border bg-white rounded text-[10px] font-bold uppercase tracking-wider text-text-main">
-                    {task.status}
-                  </span>
-                </div>
-              </div>
 
-            </div>
-          ))}
-        </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import Reservations from './views/Reservations';
 import GuestProfiles from './views/GuestProfiles';
 import Maintenance from './views/Maintenance';
 import { generateInitialRooms, generateRandomOccupancy, findOptimalRooms } from './utils/bookingLogic';
-import type { Room } from './types';
+import type { Room, Reservation, GuestProfile, MaintenanceTask } from './types';
 import './index.css';
 
 function App() {
@@ -13,12 +13,16 @@ function App() {
   const [lastBookedRooms, setLastBookedRooms] = useState<number[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<string>('allocation');
+  
+  const [reservations, setReservations] = useState<Reservation[]>([]);
+  const [guests, setGuests] = useState<GuestProfile[]>([]);
+  const [maintenanceTasks, setMaintenanceTasks] = useState<MaintenanceTask[]>([]);
 
   useEffect(() => {
     setRooms(generateInitialRooms());
   }, []);
 
-  const handleBook = (count: number) => {
+  const handleBook = (count: number, guestName: string, guestEmail: string) => {
     setError(null);
     const bookedRoomNumbers = findOptimalRooms(rooms, count);
 
@@ -34,6 +38,46 @@ function App() {
       return r;
     }));
     setLastBookedRooms(bookedRoomNumbers);
+
+    // Generate authentic guest and reservation data
+    const email = guestEmail.trim() || 'anonymous@example.com';
+    const name = guestName.trim() || 'Anonymous Guest';
+    let guest = guests.find(g => g.email === email);
+    
+    if (!guest) {
+      guest = {
+        id: `GST-${Math.floor(Math.random() * 900) + 100}`,
+        name: name,
+        email: email,
+        phone: '+1 (555) 000-0000',
+        tier: 'Standard',
+        stays: 1,
+        points: (count * 500).toLocaleString(),
+        lastVisit: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+      };
+      setGuests(prev => [...prev, guest!]);
+    } else {
+      // Update existing guest
+      setGuests(prev => prev.map(g => g.email === email ? {
+        ...g,
+        stays: g.stays + 1,
+        points: (parseInt(g.points.replace(/,/g, '')) + count * 500).toLocaleString(),
+        lastVisit: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+      } : g));
+    }
+
+    const newReservation: Reservation = {
+      id: `RES-${Math.floor(Math.random() * 9000) + 1000}`,
+      guestId: guest.id,
+      guestName: guest.name,
+      rooms: bookedRoomNumbers,
+      checkIn: new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit' }),
+      checkOut: new Date(Date.now() + 86400000 * 3).toLocaleDateString('en-US', { month: 'short', day: '2-digit' }),
+      status: 'Confirmed',
+      tier: guest.tier
+    };
+    
+    setReservations(prev => [newReservation, ...prev]);
   };
 
   const handleRandom = () => {
@@ -201,9 +245,9 @@ function App() {
             </>
           )}
 
-          {activeTab === 'reservations' && <Reservations />}
-          {activeTab === 'profiles' && <GuestProfiles />}
-          {activeTab === 'maintenance' && <Maintenance />}
+          {activeTab === 'reservations' && <Reservations reservations={reservations} />}
+          {activeTab === 'profiles' && <GuestProfiles guests={guests} />}
+          {activeTab === 'maintenance' && <Maintenance tasks={maintenanceTasks} />}
           
           {(activeTab === 'dashboard' || activeTab === 'reports' || activeTab === 'settings' || activeTab === 'housekeeping') && (
             <div className="flex-1 flex flex-col items-center justify-center bg-surface border border-border rounded-md shadow-sm">

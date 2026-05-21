@@ -1,14 +1,11 @@
 import React from 'react';
+import type { Reservation } from '../types';
 
-const Reservations = () => {
-  const reservations = [
-    { id: 'RES-0012', guest: 'Michael Chen', room: '702', checkIn: 'Oct 24', checkOut: 'Oct 28', status: 'Checked In', tier: 'Platinum' },
-    { id: 'RES-0013', guest: 'Sarah Jenkins', room: '315', checkIn: 'Oct 26', checkOut: 'Oct 29', status: 'Confirmed', tier: 'Silver' },
-    { id: 'RES-0014', guest: 'David Rodriguez', room: '901', checkIn: 'Oct 26', checkOut: 'Nov 02', status: 'Confirmed', tier: 'Gold' },
-    { id: 'RES-0015', guest: 'Emma Thompson', room: '105', checkIn: 'Oct 25', checkOut: 'Oct 27', status: 'Checked In', tier: 'Standard' },
-    { id: 'RES-0016', guest: 'James Wilson', room: 'Unassigned', checkIn: 'Oct 27', checkOut: 'Oct 30', status: 'Pending', tier: 'Standard' },
-    { id: 'RES-0017', guest: 'Olivia Davis', room: '808', checkIn: 'Oct 24', checkOut: 'Oct 26', status: 'Checking Out', tier: 'Gold' },
-  ];
+interface ReservationsProps {
+  reservations: Reservation[];
+}
+
+const Reservations: React.FC<ReservationsProps> = ({ reservations }) => {
 
   const getStatusBadge = (status: string) => {
     switch(status) {
@@ -51,23 +48,31 @@ const Reservations = () => {
             </tr>
           </thead>
           <tbody className="text-sm">
-            {reservations.map((res) => (
-              <tr key={res.id} className="border-b border-border hover:bg-gray-50 transition-colors">
-                <td className="py-4 font-semibold text-primary">{res.id}</td>
-                <td className="py-4 font-medium text-text-main">{res.guest}</td>
-                <td className="py-4"><span className="text-[10px] font-bold text-text-muted border border-border px-1.5 py-0.5 rounded uppercase">{res.tier}</span></td>
-                <td className="py-4 font-medium">{res.room}</td>
-                <td className="py-4 text-text-muted">{res.checkIn}</td>
-                <td className="py-4 text-text-muted">{res.checkOut}</td>
-                <td className="py-4 text-right">{getStatusBadge(res.status)}</td>
+            {reservations.length === 0 ? (
+              <tr>
+                <td colSpan={7} className="py-8 text-center text-text-muted">
+                  No reservations found. Book rooms in the Allocation dashboard to generate reservations.
+                </td>
               </tr>
-            ))}
+            ) : (
+              reservations.map((res) => (
+                <tr key={res.id} className="border-b border-border hover:bg-gray-50 transition-colors">
+                  <td className="py-4 font-semibold text-primary">{res.id}</td>
+                  <td className="py-4 font-medium text-text-main">{res.guestName}</td>
+                  <td className="py-4"><span className="text-[10px] font-bold text-text-muted border border-border px-1.5 py-0.5 rounded uppercase">{res.tier}</span></td>
+                  <td className="py-4 font-medium">{res.rooms.join(', ')}</td>
+                  <td className="py-4 text-text-muted">{res.checkIn}</td>
+                  <td className="py-4 text-text-muted">{res.checkOut}</td>
+                  <td className="py-4 text-right">{getStatusBadge(res.status)}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
       
       <div className="mt-4 pt-4 border-t border-border flex justify-between items-center text-xs text-text-muted">
-        <span>Showing 6 of 124 reservations</span>
+        <span>Showing {reservations.length} of {reservations.length} reservations</span>
         <div className="flex gap-1">
           <button className="px-2 py-1 border border-border rounded hover:bg-gray-50">Prev</button>
           <button className="px-2 py-1 border border-primary bg-primary text-white rounded">1</button>
