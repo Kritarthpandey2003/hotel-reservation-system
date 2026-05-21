@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,35 +11,37 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #0f172a;
-  color: #fff;
+  background-color: #0a0f1c; /* Changed to match theme background */
+  color: #f8fafc;
+  overflow-x: hidden;
 }
 
 @layer components {
   .glass-panel {
-    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
+    @apply bg-surface-glass backdrop-blur-xl border border-white/10 shadow-glass;
   }
   
   .glass-input {
-    @apply bg-black/20 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all;
+    @apply bg-black/40 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-accent-cyan/50 focus:ring-2 focus:ring-accent-cyan/20 focus:shadow-glow-primary transition-all duration-300;
   }
 
   .btn-primary {
-    @apply bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold shadow-lg shadow-blue-500/30 transition-all transform hover:scale-[1.02] active:scale-[0.98];
+    @apply relative overflow-hidden bg-gradient-to-r from-primary to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white font-bold shadow-glow-primary transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98];
   }
 }
 
-/* Custom Scrollbar for Webkit */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #1e293b; 
+  background: #0a0f1c; 
 }
 ::-webkit-scrollbar-thumb {
-  background: #475569; 
-  border-radius: 4px;
+  background: #1e293b; 
+  border-radius: 5px;
+  border: 2px solid #0a0f1c;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #64748b; 
+  background: #334155; 
 }
