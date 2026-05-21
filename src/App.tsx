@@ -84,7 +84,7 @@ function App() {
         
         {/* Top Header */}
         <header className="h-16 bg-surface border-b border-border flex items-center justify-between px-5 flex-shrink-0 z-10">
-          <h1 className="text-xl font-bold text-text-main">Room Allocation & Operations System</h1>
+          <h1 className="text-xl font-bold text-text-main">Hotel Allocation System</h1>
           
           <div className="flex items-center gap-5">
             <div className="relative hidden md:block w-64">
@@ -117,7 +117,7 @@ function App() {
           
           {/* Column 1: Main Grid Area (Scrollable) */}
           <div className="flex-[3.5] flex flex-col h-full overflow-y-auto pr-1 custom-scrollbar">
-            <HotelGrid rooms={rooms} />
+            <HotelGrid rooms={rooms} lastBookedRooms={lastBookedRooms} />
           </div>
 
           {/* Column 2: Floor Overview (Fixed/Scrollable) */}
@@ -153,6 +153,7 @@ function App() {
           <div className="w-64 flex-shrink-0 flex flex-col h-full overflow-y-auto pr-1 custom-scrollbar">
             <Controls
               rooms={rooms}
+              lastBookedRooms={lastBookedRooms}
               onBook={handleBook}
               onRandom={handleRandom}
               onReset={handleReset}

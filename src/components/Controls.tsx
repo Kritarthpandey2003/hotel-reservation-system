@@ -3,13 +3,14 @@ import type { Room } from '../types';
 
 interface ControlsProps {
     rooms: Room[];
+    lastBookedRooms: number[];
     onBook: (count: number) => void;
     onRandom: () => void;
     onReset: () => void;
     error: string | null;
 }
 
-const Controls: React.FC<ControlsProps> = ({ rooms, onBook, onRandom, onReset, error }) => {
+const Controls: React.FC<ControlsProps> = ({ rooms, lastBookedRooms, onBook, onRandom, onReset, error }) => {
     const [count, setCount] = useState<number | string>('');
 
     const handleBookClick = () => {
@@ -50,6 +51,12 @@ const Controls: React.FC<ControlsProps> = ({ rooms, onBook, onRandom, onReset, e
                     {error && (
                         <div className="text-[10px] text-red-500 font-medium">
                             {error}
+                        </div>
+                    )}
+
+                    {!error && lastBookedRooms.length > 0 && (
+                        <div className="text-[10px] text-primary font-bold bg-primary/10 p-2 rounded border border-primary/20">
+                            Successfully allocated: {lastBookedRooms.join(', ')}
                         </div>
                     )}
                     
