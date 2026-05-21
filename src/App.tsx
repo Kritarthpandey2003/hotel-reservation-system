@@ -206,16 +206,16 @@ function App() {
           {activeTab === 'allocation' && (
             <>
               {/* Column 1: Main Grid Area (Scrollable) */}
-              <div className="flex-[3.5] flex flex-col h-[600px] lg:h-full overflow-y-auto pr-1 custom-scrollbar w-full lg:w-auto">
+              <div className="flex-[3.5] flex flex-col h-auto lg:h-full overflow-visible lg:overflow-y-auto pr-1 custom-scrollbar w-full lg:w-auto">
                 <HotelGrid rooms={rooms} lastBookedRooms={lastBookedRooms} />
               </div>
 
               {/* Column 2: Floor Overview (Fixed/Scrollable) */}
-              <div className="w-full lg:w-44 flex-shrink-0 flex flex-col h-[400px] lg:h-full pr-1">
+              <div className="w-full lg:w-44 flex-shrink-0 flex flex-col h-auto lg:h-full pr-1">
                 <div className="dashboard-card p-4 h-full flex flex-col">
                   <h3 className="text-sm font-bold text-text-main mb-4 flex-shrink-0">Floor Overview</h3>
                   
-                  <div className="flex flex-col gap-4 overflow-y-auto custom-scrollbar flex-1 pr-1">
+                  <div className="flex flex-col gap-4 overflow-visible lg:overflow-y-auto custom-scrollbar flex-1 pr-1">
                     {Array.from({ length: 10 }, (_, i) => 10 - i).map(floor => {
                       const floorRooms = rooms.filter(r => r.floor === floor);
                       const total = floorRooms.length;

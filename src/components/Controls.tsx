@@ -34,7 +34,7 @@ const Controls: React.FC<ControlsProps> = ({ rooms, lastBookedRooms, onBook, onR
             <div className="dashboard-card p-4 flex flex-col">
                 <h3 className="text-sm font-bold text-text-main mb-4 flex-shrink-0">Quick Allocation Form</h3>
                 
-                <div className="space-y-3 overflow-y-auto custom-scrollbar pr-1 max-h-[250px]">
+                <div className="space-y-3 lg:overflow-y-auto custom-scrollbar pr-1 lg:max-h-[250px]">
                     <div>
                         <label className="block text-[10px] font-bold text-text-muted mb-1 uppercase tracking-wider">
                             Guest Name
@@ -113,7 +113,7 @@ const Controls: React.FC<ControlsProps> = ({ rooms, lastBookedRooms, onBook, onR
             <div className="dashboard-card p-4 flex flex-col">
                 <h3 className="text-sm font-bold text-text-main mb-4 flex-shrink-0">Current Allocation Status</h3>
                 
-                <div className="overflow-y-auto custom-scrollbar pr-1 max-h-[250px]">
+                <div className="lg:overflow-y-auto custom-scrollbar pr-1 lg:max-h-[250px]">
                     <div className="flex justify-center mb-6 mt-2 relative">
                     <div className="w-24 h-24 rounded-full border-[10px] border-primary/20 relative flex items-center justify-center">
                         <div 
@@ -148,7 +148,7 @@ const Controls: React.FC<ControlsProps> = ({ rooms, lastBookedRooms, onBook, onR
             {/* Recent Activity Feed */}
             <div className="dashboard-card p-4 flex flex-col min-h-[200px]">
                 <h3 className="text-sm font-bold text-text-main mb-3">Recent Activity Feed</h3>
-                <div className="flex flex-col gap-3 overflow-y-auto custom-scrollbar flex-1 pr-1">
+                <div className="flex flex-col gap-3 lg:overflow-y-auto custom-scrollbar flex-1 pr-1">
                     <div className="text-[10px] text-text-main"><span className="font-bold text-text-muted w-10 inline-block">15:32</span> - Guest checked in to Room 205 (Ava M.)</div>
                     <div className="text-[10px] text-text-main"><span className="font-bold text-text-muted w-10 inline-block">15:28</span> - Room 310 marked for cleaning</div>
                     <div className="text-[10px] text-text-main"><span className="font-bold text-text-muted w-10 inline-block">15:28</span> - Guest checked in to Room 205 (Ava M.)</div>
