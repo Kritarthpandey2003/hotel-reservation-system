@@ -1,102 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 body {
   margin: 0;
   padding: 0;
-  background-color: #020617; /* Deep space dark */
-  color: #f8fafc;
+  background-color: #eef2f6; /* Dashboard background */
+  color: #334155;
   overflow-x: hidden;
-  perspective: 1200px;
 }
 
 @layer components {
-  .glass-panel {
-    @apply bg-surface-glass backdrop-blur-xl border border-white/10 shadow-glass;
+  .dashboard-card {
+    @apply bg-surface rounded-xl border border-border shadow-card overflow-hidden;
   }
   
-  .glass-input {
-    @apply bg-black/40 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-accent-cyan/50 focus:ring-2 focus:ring-accent-cyan/20 focus:shadow-glow-primary transition-all duration-300;
+  .dashboard-input {
+    @apply w-full bg-white border border-border text-text-main placeholder-text-muted focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-md px-3 py-2 text-sm transition-colors;
   }
 
-  .btn-primary {
-    @apply relative overflow-hidden bg-gradient-to-r from-primary to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold shadow-glow-primary transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98];
+  .btn-dashboard {
+    @apply bg-primary hover:bg-[#346b8a] text-white font-medium py-2 px-4 rounded-md transition-colors text-sm;
+  }
+  
+  .btn-outline {
+    @apply bg-white border border-border hover:bg-gray-50 text-text-main font-medium py-2 px-4 rounded-md transition-colors text-sm;
   }
 }
 
-/* 3D Isometric Utilities */
-.preserve-3d {
-  transform-style: preserve-3d;
-}
-
-.isometric-grid {
-  transform: rotateX(60deg) rotateZ(-45deg);
-  transform-style: preserve-3d;
-  transition: transform 0.5s ease-out;
-}
-
-/* 3D Cube (Voxel) Room styles */
-.cube-3d {
-  position: relative;
-  transform-style: preserve-3d;
-}
-
-.cube-3d::before,
-.cube-3d::after {
-  content: '';
-  position: absolute;
-  background: inherit;
-  box-shadow: inherit;
-}
-
-/* Left Wall */
-.cube-3d::before {
-  width: 20px; /* Depth of the cube */
-  height: 100%;
-  top: 0;
-  left: 0;
-  transform-origin: left;
-  transform: rotateY(-90deg);
-  filter: brightness(0.6); /* Shade for lighting */
-  border-left: inherit;
-  border-top: inherit;
-  border-bottom: inherit;
-}
-
-/* Bottom Wall */
-.cube-3d::after {
-  width: 100%;
-  height: 20px; /* Depth of the cube */
-  bottom: 0;
-  left: 0;
-  transform-origin: bottom;
-  transform: rotateX(-90deg);
-  filter: brightness(0.4); /* Darker shade for bottom */
-  border-bottom: inherit;
-  border-left: inherit;
-  border-right: inherit;
-}
-
-
-/* Custom Scrollbar */
+/* Scrollbar styling for a clean look */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #020617; 
+  background: transparent; 
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b; 
-  border-radius: 5px;
-  border: 2px solid #020617;
+  background: #cbd5e1; 
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155; 
+  background: #94a3b8; 
 }
