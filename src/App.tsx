@@ -126,18 +126,25 @@ function App() {
               <h3 className="text-sm font-bold text-text-main mb-4">Floor Overview</h3>
               
               <div className="flex flex-col gap-4">
-                {Array.from({ length: 10 }, (_, i) => 10 - i).map(floor => (
-                  <div key={floor} className="flex flex-col gap-1.5">
-                    <div className="text-xs font-bold text-text-main">Floor {floor}</div>
-                    <div className="flex gap-1 h-3">
-                       {/* Simplified dynamic bars logic (just a mockup of varying availability) */}
-                       <div className="flex-1 bg-status-available rounded-sm"></div>
-                       <div className="flex-1 bg-status-available rounded-sm"></div>
-                       <div className="flex-1 bg-status-available rounded-sm opacity-50"></div>
-                       <div className="flex-1 bg-gray-200 rounded-sm"></div>
+                {Array.from({ length: 10 }, (_, i) => 10 - i).map(floor => {
+                  const floorRooms = rooms.filter(r => r.floor === floor);
+                  const total = floorRooms.length;
+                  const available = floorRooms.filter(r => !r.isBooked).length;
+                  const pct = total === 0 ? 0 : Math.round((available / total) * 100);
+
+                  return (
+                    <div key={floor} className="flex flex-col gap-1.5">
+                      <div className="text-xs font-bold text-text-main">Floor {floor}</div>
+                      <div className="flex gap-1 h-3 bg-gray-200 rounded-sm overflow-hidden">
+                         <div 
+                           className="h-full bg-status-available rounded-sm transition-all duration-500"
+                           style={{ width: `${pct}%` }}
+                         ></div>
+                      </div>
+                      <div className="text-[9px] font-semibold text-text-muted">{available}/{total} Available</div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -145,6 +152,7 @@ function App() {
           {/* Column 3: Right Panel (Fixed/Scrollable) */}
           <div className="w-64 flex-shrink-0 flex flex-col h-full overflow-y-auto pr-1 custom-scrollbar">
             <Controls
+              rooms={rooms}
               onBook={handleBook}
               onRandom={handleRandom}
               onReset={handleReset}

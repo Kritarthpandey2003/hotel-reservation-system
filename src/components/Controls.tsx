@@ -1,40 +1,26 @@
 import React, { useState } from 'react';
+import type { Room } from '../types';
 
 interface ControlsProps {
+    rooms: Room[];
     onBook: (count: number) => void;
     onRandom: () => void;
     onReset: () => void;
     error: string | null;
 }
 
-const Controls: React.FC<ControlsProps> = ({ onBook, onRandom, onReset, error }) => {
+const Controls: React.FC<ControlsProps> = ({ rooms, onBook, onRandom, onReset, error }) => {
     const [count, setCount] = useState<number | string>('');
 
-    const handleBook = () => {
+    const handleBookClick = () => {
         const num = typeof count === 'string' ? parseInt(count) || 1 : count;
         onBook(Math.max(1, Math.min(5, num)));
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const val = e.target.value;
-        if (val === '') {
-            setCount('');
-            return;
-        }
-        const parsed = parseInt(val);
-        if (!isNaN(parsed)) {
-            if (parsed > 5) setCount(5);
-            else if (parsed < 1) setCount(parsed);
-            else setCount(parsed);
-        }
-    };
-
-    const handleBlur = () => {
-        if (count === '') return;
-        let num = typeof count === 'string' ? parseInt(count) || 1 : count;
-        num = Math.max(1, Math.min(5, num));
-        setCount(num);
-    };
+    // Calculate dynamic stats
+    const totalRooms = rooms.length;
+    const occupiedRooms = rooms.filter(r => r.isBooked).length;
+    const occupancyPct = totalRooms === 0 ? 0 : Math.round((occupiedRooms / totalRooms) * 100);
 
     return (
         <div className="flex flex-col gap-4 h-full">
@@ -53,7 +39,7 @@ const Controls: React.FC<ControlsProps> = ({ onBook, onRandom, onReset, error })
                                 min="1" 
                                 max="5" 
                                 value={count}
-                                onChange={(e) => setCount(parseInt(e.target.value) || 1)}
+                                onChange={(e) => setCount(parseInt(e.target.value) || '')}
                                 className="w-full border border-border rounded pl-8 pr-3 py-1.5 text-xs text-text-main focus:outline-none focus:border-primary"
                                 placeholder="Number of Rooms"
                             />
@@ -97,11 +83,14 @@ const Controls: React.FC<ControlsProps> = ({ onBook, onRandom, onReset, error })
                 
                 <div className="flex justify-center mb-6 mt-2 relative">
                     <div className="w-24 h-24 rounded-full border-[10px] border-primary/20 relative flex items-center justify-center">
-                        <div className="absolute inset-0 border-[10px] border-primary rounded-full" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 78%, 0 78%)' }}></div>
+                        <div 
+                            className="absolute inset-0 border-[10px] border-primary rounded-full transition-all duration-700" 
+                            style={{ clipPath: `polygon(0 0, 100% 0, 100% ${occupancyPct}%, 0 ${occupancyPct}%)` }}
+                        ></div>
                         <div className="text-center">
-                            <div className="text-xl font-black text-text-main leading-none">78%</div>
+                            <div className="text-xl font-black text-text-main leading-none">{occupancyPct}%</div>
                             <div className="text-[8px] font-bold text-text-muted leading-tight mt-0.5">Occupied</div>
-                            <div className="text-[7px] font-bold text-text-muted mt-0.5">156 / 200 Rooms</div>
+                            <div className="text-[7px] font-bold text-text-muted mt-0.5">{occupiedRooms} / {totalRooms} Rooms</div>
                         </div>
                     </div>
                 </div>
@@ -109,15 +98,15 @@ const Controls: React.FC<ControlsProps> = ({ onBook, onRandom, onReset, error })
                 <div className="flex justify-between border-t border-border pt-4">
                     <div className="text-center">
                         <div className="text-[9px] font-bold text-text-muted uppercase tracking-wider mb-1">Today's<br/>Check-Ins</div>
-                        <div className="text-sm font-black text-text-main">12</div>
+                        <div className="text-sm font-black text-text-main">{occupiedRooms > 0 ? Math.floor(occupiedRooms * 0.4) : 0}</div>
                     </div>
                     <div className="text-center">
                         <div className="text-[9px] font-bold text-text-muted uppercase tracking-wider mb-1">Today's<br/>Check-Outs</div>
-                        <div className="text-sm font-black text-text-main">18</div>
+                        <div className="text-sm font-black text-text-main">{occupiedRooms > 0 ? Math.floor(occupiedRooms * 0.2) : 0}</div>
                     </div>
                     <div className="text-center">
                         <div className="text-[9px] font-bold text-text-muted uppercase tracking-wider mb-1">Maintenance<br/>Tasks</div>
-                        <div className="text-sm font-black text-text-main">5</div>
+                        <div className="text-sm font-black text-text-main">{occupiedRooms > 0 ? Math.floor(occupiedRooms * 0.1) : 0}</div>
                     </div>
                 </div>
             </div>
