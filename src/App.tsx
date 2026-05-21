@@ -16,7 +16,7 @@ function App() {
   
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [guests, setGuests] = useState<GuestProfile[]>([]);
-  const [maintenanceTasks, setMaintenanceTasks] = useState<MaintenanceTask[]>([]);
+  const [maintenanceTasks] = useState<MaintenanceTask[]>([]);
 
   useEffect(() => {
     setRooms(generateInitialRooms());
