@@ -92,6 +92,22 @@ function App() {
     setError(null);
   };
 
+  const removeReservation = (id: string) => {
+    setReservations(prev => prev.filter(r => r.id !== id));
+  };
+
+  const clearReservations = () => {
+    setReservations([]);
+  };
+
+  const removeGuest = (id: string) => {
+    setGuests(prev => prev.filter(g => g.id !== id));
+  };
+
+  const clearGuests = () => {
+    setGuests([]);
+  };
+
   return (
     <div className="flex h-screen w-full bg-background font-sans text-text-main overflow-hidden">
       
@@ -195,11 +211,11 @@ function App() {
               </div>
 
               {/* Column 2: Floor Overview (Fixed/Scrollable) */}
-              <div className="w-44 flex-shrink-0 flex flex-col h-full overflow-y-auto pr-1 custom-scrollbar">
-                <div className="dashboard-card p-4 h-full">
-                  <h3 className="text-sm font-bold text-text-main mb-4">Floor Overview</h3>
+              <div className="w-44 flex-shrink-0 flex flex-col h-full pr-1">
+                <div className="dashboard-card p-4 h-full flex flex-col">
+                  <h3 className="text-sm font-bold text-text-main mb-4 flex-shrink-0">Floor Overview</h3>
                   
-                  <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-4 overflow-y-auto custom-scrollbar flex-1 pr-1">
                     {Array.from({ length: 10 }, (_, i) => 10 - i).map(floor => {
                       const floorRooms = rooms.filter(r => r.floor === floor);
                       const total = floorRooms.length;
@@ -237,8 +253,8 @@ function App() {
             </>
           )}
 
-          {activeTab === 'reservations' && <Reservations reservations={reservations} />}
-          {activeTab === 'profiles' && <GuestProfiles guests={guests} />}
+          {activeTab === 'reservations' && <Reservations reservations={reservations} onRemove={removeReservation} onClear={clearReservations} />}
+          {activeTab === 'profiles' && <GuestProfiles guests={guests} onRemove={removeGuest} onClear={clearGuests} />}
           {activeTab === 'maintenance' && <Maintenance tasks={maintenanceTasks} />}
           
           {(activeTab === 'dashboard' || activeTab === 'reports' || activeTab === 'settings' || activeTab === 'housekeeping') && (

@@ -31,10 +31,10 @@ const Controls: React.FC<ControlsProps> = ({ rooms, lastBookedRooms, onBook, onR
     return (
         <div className="flex flex-col gap-4 h-full">
             {/* Quick Allocation Form */}
-            <div className="dashboard-card p-4">
-                <h3 className="text-sm font-bold text-text-main mb-4">Quick Allocation Form</h3>
+            <div className="dashboard-card p-4 flex flex-col">
+                <h3 className="text-sm font-bold text-text-main mb-4 flex-shrink-0">Quick Allocation Form</h3>
                 
-                <div className="space-y-3">
+                <div className="space-y-3 overflow-y-auto custom-scrollbar pr-1 max-h-[250px]">
                     <div>
                         <label className="block text-[10px] font-bold text-text-muted mb-1 uppercase tracking-wider">
                             Guest Name
@@ -110,10 +110,11 @@ const Controls: React.FC<ControlsProps> = ({ rooms, lastBookedRooms, onBook, onR
             </div>
 
             {/* Current Allocation Status */}
-            <div className="dashboard-card p-4">
-                <h3 className="text-sm font-bold text-text-main mb-4">Current Allocation Status</h3>
+            <div className="dashboard-card p-4 flex flex-col">
+                <h3 className="text-sm font-bold text-text-main mb-4 flex-shrink-0">Current Allocation Status</h3>
                 
-                <div className="flex justify-center mb-6 mt-2 relative">
+                <div className="overflow-y-auto custom-scrollbar pr-1 max-h-[250px]">
+                    <div className="flex justify-center mb-6 mt-2 relative">
                     <div className="w-24 h-24 rounded-full border-[10px] border-primary/20 relative flex items-center justify-center">
                         <div 
                             className="absolute inset-0 border-[10px] border-primary rounded-full transition-all duration-700" 
@@ -140,6 +141,7 @@ const Controls: React.FC<ControlsProps> = ({ rooms, lastBookedRooms, onBook, onR
                         <div className="text-[9px] font-bold text-text-muted uppercase tracking-wider mb-1">Maintenance<br/>Tasks</div>
                         <div className="text-sm font-black text-text-main">{occupiedRooms > 0 ? Math.floor(occupiedRooms * 0.1) : 0}</div>
                     </div>
+                </div>
                 </div>
             </div>
 
