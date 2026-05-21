@@ -3,10 +3,9 @@ import type { Room } from '../types';
 
 interface HotelGridProps {
     rooms: Room[];
-    lastBookedRooms: number[];
 }
 
-const HotelGrid: React.FC<HotelGridProps> = ({ rooms, lastBookedRooms }) => {
+const HotelGrid: React.FC<HotelGridProps> = ({ rooms }) => {
     // The mockup uses 5 floors
     const floors = [5, 4, 3, 2, 1];
 

@@ -118,7 +118,7 @@ function App() {
           
           {/* Column 1: Main Grid Area (Scrollable) */}
           <div className="flex-[3.5] flex flex-col h-full overflow-y-auto pr-1 custom-scrollbar">
-            <HotelGrid rooms={rooms} lastBookedRooms={lastBookedRooms} />
+            <HotelGrid rooms={rooms} />
           </div>
 
           {/* Column 2: Floor Overview (Fixed/Scrollable) */}
