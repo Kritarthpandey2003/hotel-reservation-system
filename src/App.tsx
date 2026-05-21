@@ -117,14 +117,6 @@ function App() {
           <ul className="space-y-1">
             <li>
               <button 
-                onClick={() => setActiveTab('dashboard')}
-                className={`w-full flex items-center px-5 py-2.5 text-sm font-medium transition-colors ${activeTab === 'dashboard' ? 'bg-[#e6f7f6] text-primary border-r-2 border-primary' : 'text-text-muted hover:bg-gray-50 hover:text-text-main'}`}
-              >
-                <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg> Dashboard
-              </button>
-            </li>
-            <li>
-              <button 
                 onClick={() => setActiveTab('allocation')}
                 className={`w-full flex items-center px-5 py-2.5 text-sm font-medium transition-colors ${activeTab === 'allocation' ? 'bg-[#e6f7f6] text-primary border-r-2 border-primary' : 'text-text-muted hover:bg-gray-50 hover:text-text-main'}`}
               >
