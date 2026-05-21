@@ -51,7 +51,6 @@ function App() {
       <aside className="w-[220px] bg-sidebar border-r border-border hidden lg:flex flex-col flex-shrink-0 z-20">
         <div className="h-16 flex items-center px-5 border-b border-border">
           <div className="flex items-center gap-2.5">
-            {/* Exact Mock Logo */}
             <div className="w-8 h-8 relative flex items-center justify-center">
               <svg viewBox="0 0 100 100" className="w-full h-full text-primary" fill="currentColor">
                  <path d="M10,20 L90,20 L50,90 Z" opacity="0.2"></path>
@@ -60,8 +59,8 @@ function App() {
               </svg>
             </div>
             <div>
-              <div className="font-bold text-sm tracking-widest uppercase leading-tight text-text-main">Vertex</div>
-              <div className="text-[9px] text-text-muted uppercase tracking-widest font-semibold">Grand Hotel</div>
+              <div className="font-bold text-sm tracking-widest uppercase leading-tight text-text-main">System</div>
+              <div className="text-[9px] text-text-muted uppercase tracking-widest font-semibold">Dashboard</div>
             </div>
           </div>
         </div>
@@ -100,12 +99,12 @@ function App() {
               </button>
               
               <div className="flex items-center gap-2 border-l border-border pl-4 cursor-pointer">
-                <div className="w-8 h-8 rounded-full bg-gray-200 overflow-hidden border border-border flex-shrink-0">
-                  <img src="https://ui-avatars.com/api/?name=Alice+Johnson&background=random" alt="Alice Johnson" className="w-full h-full object-cover" />
+                <div className="w-8 h-8 rounded-full bg-gray-200 overflow-hidden border border-border flex-shrink-0 flex items-center justify-center text-text-muted">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                 </div>
                 <div className="hidden sm:block text-left mr-1">
-                  <div className="text-xs font-bold leading-tight">Alice Johnson</div>
-                  <div className="text-[9px] font-semibold text-text-muted">Front Desk Manager</div>
+                  <div className="text-xs font-bold leading-tight">Admin User</div>
+                  <div className="text-[9px] font-semibold text-text-muted">System Manager</div>
                 </div>
                 <svg className="w-3.5 h-3.5 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
               </div>
@@ -126,19 +125,17 @@ function App() {
             <div className="dashboard-card p-4 h-full">
               <h3 className="text-sm font-bold text-text-main mb-4">Floor Overview</h3>
               
-              <div className="flex flex-col gap-5">
-                {[5, 4, 3, 2, 1].map(floor => (
+              <div className="flex flex-col gap-4">
+                {Array.from({ length: 10 }, (_, i) => 10 - i).map(floor => (
                   <div key={floor} className="flex flex-col gap-1.5">
                     <div className="text-xs font-bold text-text-main">Floor {floor}</div>
-                    <div className="flex gap-1 h-6">
-                       {/* Mock progress bar segments like screenshot */}
-                       <div className="flex-1 bg-status-available rounded-sm"></div>
+                    <div className="flex gap-1 h-3">
+                       {/* Simplified dynamic bars logic (just a mockup of varying availability) */}
                        <div className="flex-1 bg-status-available rounded-sm"></div>
                        <div className="flex-1 bg-status-available rounded-sm"></div>
                        <div className="flex-1 bg-status-available rounded-sm opacity-50"></div>
                        <div className="flex-1 bg-gray-200 rounded-sm"></div>
                     </div>
-                    <div className="text-[9px] font-semibold text-text-muted">15/20 Available</div>
                   </div>
                 ))}
               </div>
