@@ -206,12 +206,12 @@ function App() {
           {activeTab === 'allocation' && (
             <>
               {/* Column 1: Main Grid Area (Scrollable) */}
-              <div className="flex-[3.5] flex flex-col h-auto lg:h-full overflow-visible lg:overflow-y-auto pr-1 custom-scrollbar w-full lg:w-auto">
+              <div className="order-2 lg:order-1 flex-[3.5] flex flex-col h-auto lg:h-full overflow-visible lg:overflow-y-auto pr-1 custom-scrollbar w-full lg:w-auto">
                 <HotelGrid rooms={rooms} lastBookedRooms={lastBookedRooms} />
               </div>
 
               {/* Column 2: Floor Overview (Fixed/Scrollable) */}
-              <div className="w-full lg:w-44 flex-shrink-0 flex flex-col h-auto lg:h-full pr-1">
+              <div className="order-3 lg:order-2 w-full lg:w-44 flex-shrink-0 flex flex-col h-auto lg:h-full pr-1">
                 <div className="dashboard-card p-4 h-full flex flex-col">
                   <h3 className="text-sm font-bold text-text-main mb-4 flex-shrink-0">Floor Overview</h3>
                   
@@ -240,7 +240,7 @@ function App() {
               </div>
 
               {/* Column 3: Right Panel (Fixed/Scrollable) */}
-              <div className="w-full lg:w-64 flex-shrink-0 flex flex-col h-auto lg:h-full overflow-visible lg:overflow-y-auto pr-1 custom-scrollbar">
+              <div className="order-1 lg:order-3 w-full lg:w-64 flex-shrink-0 flex flex-col h-auto lg:h-full overflow-visible lg:overflow-y-auto pr-1 custom-scrollbar">
                 <Controls
                   rooms={rooms}
                   lastBookedRooms={lastBookedRooms}
