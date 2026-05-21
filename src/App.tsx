@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import HotelGrid from './components/HotelGrid';
 import Controls from './components/Controls';
+import Reservations from './views/Reservations';
+import GuestProfiles from './views/GuestProfiles';
+import Maintenance from './views/Maintenance';
 import { generateInitialRooms, generateRandomOccupancy, findOptimalRooms } from './utils/bookingLogic';
 import type { Room } from './types';
 import './index.css';
@@ -9,6 +12,7 @@ function App() {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [lastBookedRooms, setLastBookedRooms] = useState<number[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<string>('allocation');
 
   useEffect(() => {
     setRooms(generateInitialRooms());
@@ -67,14 +71,46 @@ function App() {
         
         <nav className="flex-1 py-4">
           <ul className="space-y-1">
-            <li><a href="#" className="flex items-center px-5 py-2.5 text-sm font-medium text-text-muted hover:bg-gray-50 hover:text-text-main transition-colors"><svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg> Dashboard</a></li>
-            <li><a href="#" className="flex items-center px-5 py-2.5 text-sm font-medium bg-[#e6f7f6] text-primary border-r-2 border-primary"><svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg> Real-Time Allocation</a></li>
-            <li><a href="#" className="flex items-center px-5 py-2.5 text-sm font-medium text-text-muted hover:bg-gray-50 hover:text-text-main transition-colors"><svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Reservations</a></li>
-            <li><a href="#" className="flex items-center px-5 py-2.5 text-sm font-medium text-text-muted hover:bg-gray-50 hover:text-text-main transition-colors"><svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg> Guest Profiles</a></li>
-            <li><a href="#" className="flex items-center px-5 py-2.5 text-sm font-medium text-text-muted hover:bg-gray-50 hover:text-text-main transition-colors"><svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.121 14.121L19 19m-7-7l-7-7m7 7l-3.536 3.536a2 2 0 01-2.828 0l-1.414-1.414a2 2 0 010-2.828L7.757 7.757m7.071 7.071l3.536-3.536a2 2 0 000-2.828l-1.414-1.414a2 2 0 00-2.828 0l-3.536 3.536"></path></svg> Housekeeping</a></li>
-            <li><a href="#" className="flex items-center px-5 py-2.5 text-sm font-medium text-text-muted hover:bg-gray-50 hover:text-text-main transition-colors"><svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Maintenance</a></li>
-            <li><a href="#" className="flex items-center px-5 py-2.5 text-sm font-medium text-text-muted hover:bg-gray-50 hover:text-text-main transition-colors"><svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> Reports</a></li>
-            <li><a href="#" className="flex items-center px-5 py-2.5 text-sm font-medium text-text-muted hover:bg-gray-50 hover:text-text-main transition-colors"><svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Settings</a></li>
+            <li>
+              <button 
+                onClick={() => setActiveTab('dashboard')}
+                className={`w-full flex items-center px-5 py-2.5 text-sm font-medium transition-colors ${activeTab === 'dashboard' ? 'bg-[#e6f7f6] text-primary border-r-2 border-primary' : 'text-text-muted hover:bg-gray-50 hover:text-text-main'}`}
+              >
+                <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg> Dashboard
+              </button>
+            </li>
+            <li>
+              <button 
+                onClick={() => setActiveTab('allocation')}
+                className={`w-full flex items-center px-5 py-2.5 text-sm font-medium transition-colors ${activeTab === 'allocation' ? 'bg-[#e6f7f6] text-primary border-r-2 border-primary' : 'text-text-muted hover:bg-gray-50 hover:text-text-main'}`}
+              >
+                <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg> Real-Time Allocation
+              </button>
+            </li>
+            <li>
+              <button 
+                onClick={() => setActiveTab('reservations')}
+                className={`w-full flex items-center px-5 py-2.5 text-sm font-medium transition-colors ${activeTab === 'reservations' ? 'bg-[#e6f7f6] text-primary border-r-2 border-primary' : 'text-text-muted hover:bg-gray-50 hover:text-text-main'}`}
+              >
+                <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Reservations
+              </button>
+            </li>
+            <li>
+              <button 
+                onClick={() => setActiveTab('profiles')}
+                className={`w-full flex items-center px-5 py-2.5 text-sm font-medium transition-colors ${activeTab === 'profiles' ? 'bg-[#e6f7f6] text-primary border-r-2 border-primary' : 'text-text-muted hover:bg-gray-50 hover:text-text-main'}`}
+              >
+                <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg> Guest Profiles
+              </button>
+            </li>
+            <li>
+              <button 
+                onClick={() => setActiveTab('maintenance')}
+                className={`w-full flex items-center px-5 py-2.5 text-sm font-medium transition-colors ${activeTab === 'maintenance' ? 'bg-[#e6f7f6] text-primary border-r-2 border-primary' : 'text-text-muted hover:bg-gray-50 hover:text-text-main'}`}
+              >
+                <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Maintenance
+              </button>
+            </li>
           </ul>
         </nav>
       </aside>
@@ -115,51 +151,70 @@ function App() {
         {/* Dashboard Content */}
         <main className="flex-1 overflow-hidden flex p-4 gap-4 bg-background">
           
-          {/* Column 1: Main Grid Area (Scrollable) */}
-          <div className="flex-[3.5] flex flex-col h-full overflow-y-auto pr-1 custom-scrollbar">
-            <HotelGrid rooms={rooms} lastBookedRooms={lastBookedRooms} />
-          </div>
-
-          {/* Column 2: Floor Overview (Fixed/Scrollable) */}
-          <div className="w-44 flex-shrink-0 flex flex-col h-full overflow-y-auto pr-1 custom-scrollbar">
-            <div className="dashboard-card p-4 h-full">
-              <h3 className="text-sm font-bold text-text-main mb-4">Floor Overview</h3>
-              
-              <div className="flex flex-col gap-4">
-                {Array.from({ length: 10 }, (_, i) => 10 - i).map(floor => {
-                  const floorRooms = rooms.filter(r => r.floor === floor);
-                  const total = floorRooms.length;
-                  const available = floorRooms.filter(r => !r.isBooked).length;
-                  const pct = total === 0 ? 0 : Math.round((available / total) * 100);
-
-                  return (
-                    <div key={floor} className="flex flex-col gap-1.5">
-                      <div className="text-xs font-bold text-text-main">Floor {floor}</div>
-                      <div className="flex gap-1 h-3 bg-gray-200 rounded-sm overflow-hidden">
-                         <div 
-                           className="h-full bg-status-available rounded-sm transition-all duration-500"
-                           style={{ width: `${pct}%` }}
-                         ></div>
-                      </div>
-                      <div className="text-[9px] font-semibold text-text-muted">{available}/{total} Available</div>
-                    </div>
-                  );
-                })}
+          {activeTab === 'allocation' && (
+            <>
+              {/* Column 1: Main Grid Area (Scrollable) */}
+              <div className="flex-[3.5] flex flex-col h-full overflow-y-auto pr-1 custom-scrollbar">
+                <HotelGrid rooms={rooms} lastBookedRooms={lastBookedRooms} />
               </div>
-            </div>
-          </div>
 
-          {/* Column 3: Right Panel (Fixed/Scrollable) */}
-          <div className="w-64 flex-shrink-0 flex flex-col h-full overflow-y-auto pr-1 custom-scrollbar">
-            <Controls
-              rooms={rooms}
-              lastBookedRooms={lastBookedRooms}
-              onBook={handleBook}
-              onRandom={handleRandom}
-              onReset={handleReset}
-              error={error}
-            />
-          </div>
+              {/* Column 2: Floor Overview (Fixed/Scrollable) */}
+              <div className="w-44 flex-shrink-0 flex flex-col h-full overflow-y-auto pr-1 custom-scrollbar">
+                <div className="dashboard-card p-4 h-full">
+                  <h3 className="text-sm font-bold text-text-main mb-4">Floor Overview</h3>
+                  
+                  <div className="flex flex-col gap-4">
+                    {Array.from({ length: 10 }, (_, i) => 10 - i).map(floor => {
+                      const floorRooms = rooms.filter(r => r.floor === floor);
+                      const total = floorRooms.length;
+                      const available = floorRooms.filter(r => !r.isBooked).length;
+                      const pct = total === 0 ? 0 : Math.round((available / total) * 100);
+
+                      return (
+                        <div key={floor} className="flex flex-col gap-1.5">
+                          <div className="text-xs font-bold text-text-main">Floor {floor}</div>
+                          <div className="flex gap-1 h-3 bg-gray-200 rounded-sm overflow-hidden">
+                            <div 
+                              className="h-full bg-status-available rounded-sm transition-all duration-500"
+                              style={{ width: `${pct}%` }}
+                            ></div>
+                          </div>
+                          <div className="text-[9px] font-semibold text-text-muted">{available}/{total} Available</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Column 3: Right Panel (Fixed/Scrollable) */}
+              <div className="w-64 flex-shrink-0 flex flex-col h-full overflow-y-auto pr-1 custom-scrollbar">
+                <Controls
+                  rooms={rooms}
+                  lastBookedRooms={lastBookedRooms}
+                  onBook={handleBook}
+                  onRandom={handleRandom}
+                  onReset={handleReset}
+                  error={error}
+                />
+              </div>
+            </>
+          )}
+
+          {activeTab === 'reservations' && <Reservations />}
+          {activeTab === 'profiles' && <GuestProfiles />}
+          {activeTab === 'maintenance' && <Maintenance />}
+          
+          {(activeTab === 'dashboard' || activeTab === 'reports' || activeTab === 'settings' || activeTab === 'housekeeping') && (
+            <div className="flex-1 flex flex-col items-center justify-center bg-surface border border-border rounded-md shadow-sm">
+               <svg className="w-16 h-16 text-primary/20 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+               <h2 className="text-xl font-bold text-text-main">Feature Under Development</h2>
+               <p className="text-sm text-text-muted mt-2">The {activeTab} view will be available in the next release.</p>
+               <button onClick={() => setActiveTab('allocation')} className="mt-6 px-6 py-2 bg-primary hover:bg-[#319795] text-white text-sm font-bold rounded shadow-sm transition-colors">
+                 Back to Allocation
+               </button>
+            </div>
+          )}
 
         </main>
       </div>

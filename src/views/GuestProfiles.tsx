@@ -1,0 +1,91 @@
+import React from 'react';
+
+const GuestProfiles = () => {
+  const guests = [
+    { id: 'GST-882', name: 'Alice Johnson', email: 'alice.j@example.com', phone: '+1 (555) 019-2831', tier: 'Platinum', stays: 42, points: '124,500', lastVisit: 'Oct 12, 2026' },
+    { id: 'GST-105', name: 'Michael Chen', email: 'm.chen@corporate.com', phone: '+1 (555) 992-1022', tier: 'Gold', stays: 18, points: '45,200', lastVisit: 'Sep 28, 2026' },
+    { id: 'GST-934', name: 'Sarah Jenkins', email: 'sarah.j@email.com', phone: '+44 20 7123 4567', tier: 'Silver', stays: 5, points: '12,000', lastVisit: 'Jul 14, 2026' },
+    { id: 'GST-221', name: 'David Rodriguez', email: 'drodriguez@mail.net', phone: '+1 (555) 334-9081', tier: 'Platinum', stays: 31, points: '89,400', lastVisit: 'Oct 01, 2026' },
+    { id: 'GST-675', name: 'Emma Thompson', email: 'emma.t@example.co.uk', phone: '+44 7700 900077', tier: 'Standard', stays: 2, points: '2,500', lastVisit: 'Mar 10, 2026' },
+    { id: 'GST-443', name: 'James Wilson', email: 'j.wilson@business.com', phone: '+1 (555) 887-5542', tier: 'Gold', stays: 14, points: '38,900', lastVisit: 'Aug 22, 2026' },
+  ];
+
+  const getTierColor = (tier: string) => {
+    switch(tier) {
+      case 'Platinum': return 'bg-slate-800 text-white border-slate-700';
+      case 'Gold': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'Silver': return 'bg-gray-100 text-gray-800 border-gray-200';
+      default: return 'bg-white text-text-muted border-border';
+    }
+  };
+
+  return (
+    <div className="flex flex-col h-full w-full bg-surface border border-border p-6 rounded-md shadow-sm">
+      <div className="flex justify-between items-center mb-6 border-b border-border pb-4">
+        <div>
+          <h2 className="text-lg font-bold text-text-main">Guest Profiles</h2>
+          <p className="text-xs text-text-muted mt-1">Manage guest information, loyalty tiers, and stay history</p>
+        </div>
+        <div className="flex gap-3">
+          <div className="relative">
+            <input type="text" placeholder="Search by name, email, or ID..." className="border border-border rounded pl-8 pr-3 py-1.5 text-xs focus:outline-none focus:border-primary w-64" />
+            <svg className="w-3.5 h-3.5 text-text-muted absolute left-2.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </div>
+          <button className="bg-primary hover:bg-[#319795] text-white text-xs font-bold py-1.5 px-4 rounded transition-colors shadow-sm">
+            Add Profile
+          </button>
+        </div>
+      </div>
+
+      <div className="flex-1 overflow-auto custom-scrollbar">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {guests.map((guest) => (
+            <div key={guest.id} className="border border-border rounded-md p-4 hover:shadow-md transition-shadow bg-white flex flex-col relative">
+              
+              <div className="flex justify-between items-start mb-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
+                    {guest.name.split(' ').map(n => n[0]).join('')}
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-text-main">{guest.name}</h3>
+                    <div className="text-[10px] text-text-muted">{guest.id}</div>
+                  </div>
+                </div>
+                <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${getTierColor(guest.tier)}`}>
+                  {guest.tier}
+                </span>
+              </div>
+
+              <div className="space-y-2 mt-2 border-t border-border pt-3">
+                <div className="flex items-center gap-2 text-xs text-text-muted">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                  {guest.email}
+                </div>
+                <div className="flex items-center gap-2 text-xs text-text-muted">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                  {guest.phone}
+                </div>
+              </div>
+
+              <div className="mt-4 bg-gray-50 rounded p-2 flex justify-between items-center border border-border/50">
+                <div className="text-center flex-1">
+                  <div className="text-[9px] font-bold text-text-muted uppercase tracking-wider mb-0.5">Total Stays</div>
+                  <div className="text-sm font-black text-text-main">{guest.stays}</div>
+                </div>
+                <div className="w-px h-6 bg-border"></div>
+                <div className="text-center flex-1">
+                  <div className="text-[9px] font-bold text-text-muted uppercase tracking-wider mb-0.5">Reward Pts</div>
+                  <div className="text-sm font-black text-primary">{guest.points}</div>
+                </div>
+              </div>
+
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default GuestProfiles;
