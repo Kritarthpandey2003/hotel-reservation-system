@@ -11,9 +11,10 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #0a0f1c; /* Changed to match theme background */
+  background-color: #020617; /* Deep space dark */
   color: #f8fafc;
   overflow-x: hidden;
+  perspective: 1200px;
 }
 
 @layer components {
@@ -26,21 +27,75 @@ body {
   }
 
   .btn-primary {
-    @apply relative overflow-hidden bg-gradient-to-r from-primary to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white font-bold shadow-glow-primary transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98];
+    @apply relative overflow-hidden bg-gradient-to-r from-primary to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold shadow-glow-primary transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98];
   }
 }
+
+/* 3D Isometric Utilities */
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.isometric-grid {
+  transform: rotateX(60deg) rotateZ(-45deg);
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease-out;
+}
+
+/* 3D Cube (Voxel) Room styles */
+.cube-3d {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.cube-3d::before,
+.cube-3d::after {
+  content: '';
+  position: absolute;
+  background: inherit;
+  box-shadow: inherit;
+}
+
+/* Left Wall */
+.cube-3d::before {
+  width: 20px; /* Depth of the cube */
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform-origin: left;
+  transform: rotateY(-90deg);
+  filter: brightness(0.6); /* Shade for lighting */
+  border-left: inherit;
+  border-top: inherit;
+  border-bottom: inherit;
+}
+
+/* Bottom Wall */
+.cube-3d::after {
+  width: 100%;
+  height: 20px; /* Depth of the cube */
+  bottom: 0;
+  left: 0;
+  transform-origin: bottom;
+  transform: rotateX(-90deg);
+  filter: brightness(0.4); /* Darker shade for bottom */
+  border-bottom: inherit;
+  border-left: inherit;
+  border-right: inherit;
+}
+
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0f1c; 
+  background: #020617; 
 }
 ::-webkit-scrollbar-thumb {
   background: #1e293b; 
   border-radius: 5px;
-  border: 2px solid #0a0f1c;
+  border: 2px solid #020617;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #334155; 

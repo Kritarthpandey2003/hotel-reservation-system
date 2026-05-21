@@ -11,7 +11,6 @@ function App() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Initialize rooms
     setRooms(generateInitialRooms());
   }, []);
 
@@ -24,19 +23,17 @@ function App() {
       return;
     }
 
-    // Update rooms
     setRooms(prev => prev.map(r => {
       if (bookedRoomNumbers.includes(r.number)) {
         return { ...r, isBooked: true };
       }
       return r;
     }));
-
     setLastBookedRooms(bookedRoomNumbers);
   };
 
   const handleRandom = () => {
-    setRooms(generateRandomOccupancy(generateInitialRooms())); // Reset and randomize
+    setRooms(generateRandomOccupancy(generateInitialRooms()));
     setLastBookedRooms([]);
     setError(null);
   };
@@ -48,85 +45,76 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4 md:p-8 font-sans text-white overflow-hidden relative selection:bg-accent-cyan/30">
-      {/* Background Elements - Deep glowing orbs */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-        <div className="absolute -top-[10%] -left-[5%] w-[40vw] h-[40vw] max-w-2xl max-h-2xl bg-accent-purple/20 rounded-full blur-[120px] mix-blend-screen animate-float"></div>
-        <div className="absolute bottom-[5%] right-[0%] w-[35vw] h-[35vw] max-w-xl max-h-xl bg-accent-cyan/15 rounded-full blur-[100px] mix-blend-screen animate-float" style={{ animationDelay: '2s', animationDuration: '8s' }}></div>
-        <div className="absolute top-[40%] left-[30%] w-[20vw] h-[20vw] max-w-md max-h-md bg-primary-glow rounded-full blur-[80px] mix-blend-screen animate-pulse-slow"></div>
-        {/* Subtle grid pattern overlay */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDMpIiBmaWxsPSJub25lIj48cGF0aCBkPSJNMCA0MGw0MC00MCIvPjxwYXRoIGQ9Ik00MCA0MEwwIDAiLz48L2c+PC9zdmc+')] opacity-50 z-0"></div>
+    <div className="min-h-screen bg-background flex flex-col xl:flex-row items-center justify-center p-4 md:p-8 font-sans text-white overflow-hidden relative selection:bg-primary/30">
+      
+      {/* Background Deep Space Particles / Glow */}
+      <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] bg-accent-purple/10 rounded-full blur-[120px] animate-spin-slow mix-blend-screen"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-[30vw] h-[30vw] bg-primary/10 rounded-full blur-[100px] animate-spin-slow mix-blend-screen" style={{ animationDirection: 'reverse' }}></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDMpIiBmaWxsPSJub25lIj48cGF0aCBkPSJNMCA0MGw0MC00MCIvPjxwYXRoIGQ9Ik00MCA0MEwwIDAiLz48L2c+PC9zdmc+')] opacity-20"></div>
       </div>
 
-      <div className="flex flex-col xl:flex-row gap-8 xl:gap-12 items-start relative z-10 max-w-7xl w-full mx-auto">
-        {/* Left Panel: Description & Controls */}
-        <div className="flex flex-col gap-8 flex-1 w-full animate-slide-up">
-          <div className="text-left">
-            <h1 className="font-display text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-accent-cyan via-blue-400 to-accent-purple mb-3 tracking-tight pb-2">
-              Hotel Allocation
-            </h1>
-            <p className="text-gray-400 text-lg md:text-xl font-light">
-              Smart room assignment with minimal travel time.
+      {/* Floating HUD Controls */}
+      <div className="w-full xl:w-[450px] flex-shrink-0 z-20 xl:mr-10 animate-slide-up">
+        
+        <div className="mb-10 text-center xl:text-left relative">
+          <div className="absolute -inset-4 bg-primary/20 blur-2xl rounded-full opacity-50"></div>
+          <h1 className="relative font-display text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white via-primary to-accent-cyan tracking-tighter uppercase drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]">
+            Holo-Grid
+          </h1>
+          <p className="relative text-primary font-bold tracking-widest uppercase mt-2 text-sm drop-shadow-md">
+            Allocation System v3.0
+          </p>
+        </div>
+
+        <div className="mb-8 glass-panel p-5 rounded-xl border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.1)] relative overflow-hidden group">
+            <div className="absolute top-0 left-0 w-1 h-full bg-primary shadow-glow-primary"></div>
+            <p className="flex items-center gap-3 mb-2 font-display text-sm font-bold tracking-widest uppercase text-gray-300">
+              <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              Directives
             </p>
-            <div className="h-1.5 w-24 bg-gradient-to-r from-accent-cyan to-transparent rounded-full mt-6 shadow-glow-primary"></div>
-          </div>
-
-          <div className="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:border-white/20 transition-colors duration-500">
-            <div className="absolute -inset-1 bg-gradient-to-r from-accent-cyan/10 to-accent-purple/10 blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-            <div className="relative z-10">
-              <p className="flex items-center gap-2 mb-3">
-                <svg className="w-5 h-5 text-accent-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <strong className="text-white font-display text-lg tracking-wide">Allocation Rules</strong>
-              </p>
-              <ul className="text-gray-300 space-y-2 ml-7">
-                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-accent-purple"></div> Single floor priority.</li>
-                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-accent-cyan"></div> Minimize travel time (horizontal + vertical).</li>
-                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-primary"></div> Maximum 5 rooms per booking.</li>
-              </ul>
-            </div>
-          </div>
-
-          <Controls
-            onBook={handleBook}
-            onRandom={handleRandom}
-            onReset={handleReset}
-            error={error}
-          />
-
-          {/* Booking Result Feedback */}
-          {lastBookedRooms.length > 0 && (
-            <div className="bg-emerald-900/20 border border-emerald-500/30 p-6 rounded-2xl backdrop-blur-md animate-slide-up shadow-glow-emerald relative overflow-hidden">
-               <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-[40px] -mr-16 -mt-16 pointer-events-none"></div>
-              <h3 className="text-accent-emerald font-bold text-xl mb-3 flex items-center gap-2 font-display">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                Booking Successful!
-              </h3>
-              <p className="text-gray-300 text-sm mb-4">Allocated Rooms:</p>
-              <div className="flex flex-wrap gap-3">
-                {lastBookedRooms.map((num, i) => (
-                  <div
-                    key={num}
-                    className="w-14 h-14 flex items-center justify-center text-white font-extrabold text-lg rounded-xl shadow-lg animate-pulse"
-                    style={{
-                      background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                      border: '1px solid rgba(255,255,255,0.2)',
-                      boxShadow: '0 10px 15px -3px rgba(16, 185, 129, 0.4), 0 4px 6px -4px rgba(16, 185, 129, 0.4)',
-                      animationDelay: `${i * 0.1}s`
-                    }}
-                  >
-                    {num}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+            <ul className="text-gray-400 space-y-1.5 ml-7 text-xs font-medium tracking-wide">
+              <li className="flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-accent-purple shadow-glow-primary"></div> Floor clustering priority.</li>
+              <li className="flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-primary shadow-glow-primary"></div> Traversal distance minimized.</li>
+              <li className="flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-white shadow-glow-primary"></div> Max occupancy: 5 units.</li>
+            </ul>
         </div>
 
-        {/* Right Panel: Visualization */}
-        <div className="flex-[1.5] w-full animate-slide-up" style={{ animationDelay: '0.1s' }}>
-          <HotelGrid rooms={rooms} lastBookedRooms={lastBookedRooms} />
-        </div>
+        <Controls
+          onBook={handleBook}
+          onRandom={handleRandom}
+          onReset={handleReset}
+          error={error}
+        />
+
+        {/* HUD Booking Success */}
+        {lastBookedRooms.length > 0 && (
+          <div className="mt-8 bg-emerald-950/40 border border-emerald-500/50 p-5 rounded-xl backdrop-blur-md animate-slide-up shadow-glow-emerald relative overflow-hidden">
+             <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/20 rounded-full blur-[40px] -mr-16 -mt-16 pointer-events-none"></div>
+            <h3 className="text-emerald-400 font-bold text-sm tracking-widest uppercase mb-3 flex items-center gap-2 font-display">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              Allocation Confirmed
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {lastBookedRooms.map((num, i) => (
+                <div
+                  key={num}
+                  className="w-10 h-10 flex items-center justify-center text-emerald-100 font-black text-sm rounded bg-emerald-600/30 border border-emerald-400/50 shadow-[inset_0_0_10px_rgba(16,185,129,0.5)] animate-pulse"
+                  style={{ animationDelay: `${i * 0.1}s` }}
+                >
+                  {num}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
+
+      {/* Right Panel: 3D Visualization */}
+      <div className="flex-1 w-full max-w-[800px] mt-12 xl:mt-0 z-10 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+        <HotelGrid rooms={rooms} lastBookedRooms={lastBookedRooms} />
+      </div>
+
     </div>
   );
 }
